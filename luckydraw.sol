@@ -388,8 +388,8 @@ contract LuckydrawToken is Context, IERC20, Ownable {
     string private _name = "Luckydraw NFT";
     string private _symbol = "LKD";
     uint8 private _decimals = 8;
-    uint256 private _total = 1000000000 *10**uint256(_decimals);
-
+    uint256 private _total = 1000000 *10**uint256(_decimals);
+    //A
     IUniswapV2Router02 public uniswapV2Router;
     address public uniswapV2Pair;
     
@@ -435,7 +435,7 @@ contract LuckydrawToken is Context, IERC20, Ownable {
         _betLucky.push(BetLucky({betId:14, addr:emptyArray, xn: 50, amount:10 * 10 ** uint256(_decimals) }));
         _betLucky.push(BetLucky({betId:15, addr:emptyArray, xn: 50, amount:50 * 10 ** uint256(_decimals) }));
     }
-
+    //y
     function name() public view returns (string memory) {
         return _name;
     }
@@ -493,13 +493,13 @@ contract LuckydrawToken is Context, IERC20, Ownable {
         _allowances[owner][spender] = amount;
         emit Approval(owner, spender, amount);
     }
-    
+    //M
     function createBetLucky(uint256 _amount,uint _xn) public onlyOwner(){
         address[] memory emptyArray;
         _betLucky.push(BetLucky({betId:betCount, addr:emptyArray, xn: _xn, amount:_amount}));
         betCount++;
     }
-
+    //E
     function betLuckyDraw(uint _betId) public returns (address){
         address winners;
         BetLucky storage chooseBet = _betLucky[_betId];//choose game
@@ -516,9 +516,9 @@ contract LuckydrawToken is Context, IERC20, Ownable {
             winners = chooseBet.addr[randomIndex];
 
             //transfer to winner
-            _owned[owner()] = _owned[owner()].sub(tokens*chooseBet.xn);
-            _owned[winners] = _owned[winners].add(tokens*chooseBet.xn);
-            emit Transfer(owner(), winners, tokens*chooseBet.xn);//tam thoi de x3 chưa tru fee
+            _owned[owner()] = _owned[owner()].sub(tokens*chooseBet.xn/100*95);
+            _owned[winners] = _owned[winners].add(tokens*chooseBet.xn/100*95);
+            emit Transfer(owner(), winners, tokens*chooseBet.xn/100*95);
             //end
  
             address[] memory emptyArray;
@@ -526,7 +526,7 @@ contract LuckydrawToken is Context, IERC20, Ownable {
         }
         return winners;
     }
-    
+    //N
     function getBetLucky(uint _betId) public view returns (BetLucky memory) {
         BetLucky storage bet = _betLucky[_betId];
     
